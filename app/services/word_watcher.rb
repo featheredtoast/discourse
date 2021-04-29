@@ -64,6 +64,27 @@ class WordWatcher
     "watched-words-list:#{action}"
   end
 
+  def self.censor(html)
+    regexp = WordWatcher.word_matcher_regexp(:censor)
+    return html if regexp.blank?
+
+    doc = Nokogiri::HTML5::fragment(html)
+    doc.traverse do |node|
+      if node.text?
+        node.content = node.content.gsub(regexp) do |match|
+          # the regex captures leading whitespaces
+          padding = match.size - match.lstrip.size
+          if padding > 0
+            match[0..padding - 1] + CGI.unescape_html("&#9632;") * (match.size - padding)
+          else
+            CGI.unescape_html("&#9632;") * match.size
+          end
+        end
+      end
+    end
+    doc.to_s
+  end
+
   def self.clear_cache!
     WatchedWord.actions.each do |a, i|
       Discourse.cache.delete word_matcher_regexp_key(a)
