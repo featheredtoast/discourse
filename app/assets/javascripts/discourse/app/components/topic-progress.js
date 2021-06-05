@@ -155,12 +155,6 @@ export default Component.extend({
     const windowHeight = $(window).height();
     let composerHeight = $("#reply-control").height() || 0;
     const isDocked = offset >= maximumOffset - windowHeight + composerHeight;
-    let bottom = $("body").height() - maximumOffset;
-
-    const $iPadFooterNav = $(".footer-nav-ipad .footer-nav");
-    if ($iPadFooterNav && $iPadFooterNav.length > 0) {
-      bottom += $iPadFooterNav.outerHeight();
-    }
 
     const draftComposerHeight = 40;
 
@@ -171,9 +165,9 @@ export default Component.extend({
         composerHeight =
           $replyDraft.outerHeight() + $iPhoneFooterNav.outerHeight();
       }
-      $wrapper.css("bottom", isDocked ? bottom : composerHeight);
+      $wrapper.css("bottom", composerHeight);
     } else {
-      $wrapper.css("bottom", isDocked ? bottom : "");
+      $wrapper.css("bottom", "");
     }
 
     this.set("docked", isDocked);

@@ -59,10 +59,9 @@
 }
 
 #topic-progress-wrapper {
-  position: fixed;
+  @include sticky;
   bottom: 0;
   left: 0;
-  margin: 0 auto;
   max-width: $reply-area-max-width;
   display: flex;
   justify-content: flex-end;
@@ -74,10 +73,6 @@
   > * {
     // and then we reset for its children
     pointer-events: auto;
-  }
-  &.docked {
-    position: absolute;
-    bottom: -70px;
   }
   html.rtl & {
     justify-content: flex-start;

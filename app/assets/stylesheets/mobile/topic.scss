@@ -32,7 +32,7 @@
 }
 
 #topic-progress-wrapper {
-  position: fixed;
+  @include sticky;
   right: 10px; // match 10px padding on .wrap
   bottom: 0;
   z-index: z("timeline");
@@ -149,10 +149,6 @@
     margin-left: auto;
     margin-right: auto;
   }
-}
-
-#topic-progress-wrapper.docked {
-  position: absolute;
 }
 
 .topic-post:last-of-type {

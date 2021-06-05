@@ -42,7 +42,7 @@
   // timeline
   @media screen and (min-width: 925px) {
     // at 925px viewport width and above the timeline is visible (see topic-navigation.js)
-    .topic-navigation {
+    .topic-navigation .timeline-container {
       grid-area: timeline;
       align-self: start;
       @include sticky;
@@ -90,7 +90,16 @@
   }
 }
 
+.topic-navigation {
+  &,
+  & > .ember-view {
+    display: contents;
+  }
+}
 #topic-progress-wrapper {
+  grid-row: 1/1;
+  grid-column: 2;
+  align-self: end;
   display: flex;
   right: 9px; // 8px padding on #main-outlet + 1px right border
   .topic-admin-menu-button-container {
