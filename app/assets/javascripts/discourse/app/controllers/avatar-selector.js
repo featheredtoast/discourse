@@ -21,8 +21,26 @@ export default Controller.extend(ModalFunctionality, {
     "siteSettings.selectable_avatars"
   )
   selectableAvatars(enabled, list) {
-    if (enabled) {
+    if (enabled !== "none") {
       return list ? list.split("|") : [];
+    }
+  },
+
+  @discourseComputed("siteSettings.selectable_avatars_enabled")
+  showSelectableAvatars(enabled) {
+    return enabled !== "none";
+  },
+
+  @discourseComputed("siteSettings.selectable_avatars_enabled")
+  showAvatarUploader(selectableAvatars) {
+    if (selectableAvatars === "none") {
+      return true;
+    }
+    if (selectableAvatars === "restrict_all") {
+      return false;
+    }
+    if (selectableAvatars === "restrict_nonstaff") {
+      return this.user.admin || this.user.moderator;
     }
   },
 

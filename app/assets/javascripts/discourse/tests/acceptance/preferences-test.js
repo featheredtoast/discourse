@@ -299,7 +299,7 @@ acceptance(
   "Avatar selector when selectable avatars is enabled",
   function (needs) {
     needs.user();
-    needs.settings({ selectable_avatars_enabled: true });
+    needs.settings({ selectable_avatars_enabled: "restrict_all" });
     needs.pretender((server, helper) => {
       server.get("/site/selectable-avatars.json", () =>
         helper.response([
