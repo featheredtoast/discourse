@@ -39,6 +39,13 @@ export default Controller.extend(ModalFunctionality, {
     if (selectableAvatars === "restrict_all") {
       return false;
     }
+    if (selectableAvatars.startsWith("restrict_tl")) {
+      const restrictedTl = parseInt(
+        selectableAvatars.replace("restrict_tl", ""),
+        10
+      );
+      return this.user.trust_level > restrictedTl;
+    }
     if (selectableAvatars === "restrict_nonstaff") {
       return this.user.admin || this.user.moderator;
     }

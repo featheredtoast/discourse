@@ -1404,6 +1404,9 @@ files:
     type: enum
     choices:
       - none
+      - restrict_tl1
+      - restrict_tl2
+      - restrict_tl3
       - restrict_nonstaff
       - restrict_all
     validator: "SelectableAvatarsEnabledValidator"
