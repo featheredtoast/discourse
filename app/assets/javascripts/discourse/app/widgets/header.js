@@ -3,6 +3,7 @@ import I18n from "I18n";
 import { addExtraUserClasses } from "discourse/helpers/user-avatar";
 import { avatarImg } from "discourse/widgets/post";
 import { createWidget } from "discourse/widgets/widget";
+import discourseLater from "discourse-common/lib/later";
 import getURL from "discourse-common/lib/get-url";
 import { h } from "virtual-dom";
 import { iconNode } from "discourse-common/lib/icon-library";
@@ -364,8 +365,27 @@ createWidget("revamped-hamburger-menu-wrapper", {
     }
   },
 
-  clickOutside() {
-    this.sendWidgetAction("toggleHamburger");
+  clickOutside(e) {
+    if (e.target.classList.contains("header-cloak")) {
+      const panel = document.querySelector(".menu-panel");
+      const headerCloak = document.querySelector(".header-cloak");
+      headerCloak.classList.add("animate");
+      panel.classList.add("animate");
+
+      const finishPosition =
+        document.querySelector("html").classList["direction"] === "rtl"
+          ? "100vw"
+          : "-100vw";
+      panel.style["transform"] = `translate3d(${finishPosition}, 0, 0)`;
+      headerCloak.style.setProperty("--opacity", 0);
+      discourseLater(() => {
+        this.sendWidgetAction("toggleHamburger");
+        headerCloak.classList.remove("animate");
+        panel.classList.remove("animate");
+      }, 200);
+    } else {
+      this.sendWidgetAction("toggleHamburger");
+    }
   },
 });
 
@@ -391,8 +411,27 @@ createWidget("revamped-user-menu-wrapper", {
     this.sendWidgetAction("toggleUserMenu");
   },
 
-  clickOutside() {
-    this.closeUserMenu();
+  clickOutside(e) {
+    if (e.target.classList.contains("header-cloak")) {
+      const panel = document.querySelector(".menu-panel");
+      const headerCloak = document.querySelector(".header-cloak");
+      headerCloak.classList.add("animate");
+      panel.classList.add("animate");
+
+      const finishPosition =
+        document.querySelector("html").classList["direction"] === "rtl"
+          ? "-100vw"
+          : "100vw";
+      panel.style["transform"] = `translate3d(${finishPosition}, 0, 0)`;
+      headerCloak.style.setProperty("--opacity", 0);
+      discourseLater(() => {
+        this.closeUserMenu();
+        headerCloak.classList.remove("animate");
+        panel.classList.remove("animate");
+      }, 200);
+    } else {
+      this.closeUserMenu();
+    }
   },
 });
 
