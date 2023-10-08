@@ -10,7 +10,7 @@ import { schedule } from "@ember/runloop";
 import { scrollTop } from "discourse/mixins/scroll-top";
 import { wantsNewWindow } from "discourse/lib/intercept-click";
 import { logSearchLinkClick } from "discourse/lib/search";
-import ScrollLock from "discourse/lib/scroll-lock";
+import scrollLock from "discourse/lib/scroll-lock";
 import RenderGlimmer from "discourse/widgets/render-glimmer";
 import { hbs } from "ember-cli-htmlbars";
 import { SEARCH_BUTTON_ID } from "discourse/components/search-menu";
@@ -673,7 +673,7 @@ export default createWidget("header", {
     if (!this.site.mobileView) {
       return;
     }
-    ScrollLock.toggle(bool);
+    scrollLock(bool);
   },
 
   togglePageSearch() {
